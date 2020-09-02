@@ -5,7 +5,8 @@ COPY . /usr/src/app/
 RUN yarn install
 RUN yarn run build
 FROM nginx:1.19.2-alpine
-COPY --from=build /usr/src/app/public/ /usr/share/nginx/html
+COPY --from=build /usr/src/app/build/ /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
 RUN rm /etc/nginx/conf.d/default.conf
 COPY --from=build /usr/src/app/nginx.conf /etc/nginx/conf.d
 EXPOSE 80
